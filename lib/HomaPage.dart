@@ -26,100 +26,136 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(fontSize: 30),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/HomePage.png"),
-                    fit: BoxFit.fitHeight),
-              ),
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            height: 250,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/HomePage.png"),
+                  fit: BoxFit.fitHeight),
             ),
-            SizedBox(
-              height: 15,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          CarouselSlider.builder(
+            itemCount: 15,
+            options: CarouselOptions(
+              height: 200,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: false,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
             ),
-            CarouselSlider.builder(
-              itemCount: 15,
-              options: CarouselOptions(
-                height: 200,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.8,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: false,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
-              ),
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      Container(
-                height: 200,
-                width: Get.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
                     Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/kayıtOl.jpg"),
-                            fit: BoxFit.fitWidth),
-                      ),
+              height: 200,
+              width: Get.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/kayıtOl.jpg"),
+                          fit: BoxFit.fitWidth),
                     ),
-                    SizedBox(
-                      height: 5,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "27 Apr - 13:00 ",
+                    style: TextStyle(color: Colors.amber),
+                  ),
+                  Flexible(
+                    child: Text(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                      overflow: TextOverflow.clip,
                     ),
-                    Text(
-                      "27 Apr - 13:00 ",
-                      style: TextStyle(color: Colors.amber),
-                    ),
-                    Flexible(
-                      child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                        overflow: TextOverflow.clip,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("İstanbul/Beykoz"),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: 4,
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, i) {
-                            return Container(
-                              height: 25,
-                              width: 25,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.amber),
-                            );
-                          }),
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("İstanbul/Beykoz"),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: 4,
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, i) {
+                          return Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.amber),
+                          );
+                        }),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+              child: Column(
+                children: [
+                  Container(
+                      height: 100,
+                      width: Get.width,
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Yakındakiler",style: TextStyle(color: Colors.black)),
+                          Container(
+                              height: 35,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Center(child: Text("More Detail Click"))),
+                        ],
+                      )),
+                  ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 6,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 100,
+                          width: 100,
+                          color: Colors.blue,
+                          margin: EdgeInsets.only(bottom: 5),
+                        );
+                      }),
+                ],
+              ))
+        ],
       ),
     );
   }

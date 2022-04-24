@@ -8,7 +8,6 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
         child: SafeArea(
           child: Container(
             margin: EdgeInsets.all(24),
