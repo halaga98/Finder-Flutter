@@ -124,21 +124,25 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
               child: Column(
                 children: [
+
                   Container(
-                      height: 100,
+                      padding:EdgeInsets.symmetric(horizontal: 15) ,
+                      height: 50,
                       width: Get.width,
                       color: Colors.white,
+
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Yakındakiler",style: TextStyle(color: Colors.black)),
                           Container(
+
                               height: 35,
-                              width: 100,
+                              width: 70,
                               decoration: BoxDecoration(
                                   color: Colors.amber,
                                   borderRadius: BorderRadius.circular(30)),
-                              child: Center(child: Text("More Detail Click"))),
+                              child: Center(child: Text("Keşfet"))),
                         ],
                       )),
                   ListView.builder(
@@ -147,11 +151,58 @@ class _HomePageState extends State<HomePage> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Container(
-                          height: 100,
-                          width: 100,
-                          color: Colors.blue,
-                          margin: EdgeInsets.only(bottom: 5),
+                          height: 200,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 100,
+                                width: MediaQuery.of(context).size.width,
+
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "27 Apr - 13:00 ",
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text("İstanbul/Beykoz"),
+                              Expanded(
+                                child: ListView.builder(
+                                    itemCount: 4,
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, i) {
+                                      return Container(
+                                        height: 25,
+                                        width: 25,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle, color: Colors.amber),
+                                      );
+                                    }),
+                              )
+                            ],
+                          ),
                         );
+
+
                       }),
                 ],
               ))
