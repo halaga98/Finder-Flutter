@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/CreateEvent.dart';
 import 'package:project/HomaPage.dart';
 import 'package:project/LoginPage.dart';
 import 'package:project/RegisterPage.dart';
@@ -26,8 +27,9 @@ class _TabNavigatorState extends State<TabNavigator> {
     if (widget.tabItem == "Page1")
       child = HomePage();
     else if (widget.tabItem == "Page2")
-      child = Container();
-    else if (widget.tabItem == "Page3") child = LoginPage();
+      child = CEventPage();
+    else if (widget.tabItem == "Page3")
+      child = LoginPage();
     return Navigator(
       key: widget.navigatorKey,
       onGenerateRoute: (routeSettings) {

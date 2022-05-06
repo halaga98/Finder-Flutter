@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/Themes.dart';
 
+import 'ListEvent.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -142,7 +144,15 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                   color: Colors.amber,
                                   borderRadius: BorderRadius.circular(30)),
-                              child: Center(child: Text("Keşfet"))),
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                ),
+                                onPressed: () {
+                                  Get.to(EventPage());
+                                },
+                                child: Text('Keşfet'),
+                              )),
                         ],
                       )),
                   ListView.builder(
