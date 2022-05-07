@@ -14,6 +14,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 _header(context),
                 SizedBox(
                   height: 30,
@@ -32,6 +33,7 @@ class LoginPage extends StatelessWidget {
   _header(context) {
     return Column(
       children: [
+
         Container(
           height: 250,
           width: MediaQuery.of(context).size.width,
