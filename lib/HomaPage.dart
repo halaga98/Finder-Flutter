@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ListEvent.dart';
 import 'package:project/Themes.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,9 +30,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         shrinkWrap: true,
+
         children: [
           Container(
             height: 250,
+
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -45,6 +48,7 @@ class _HomePageState extends State<HomePage> {
           ),
           CarouselSlider.builder(
             itemCount: 15,
+
             options: CarouselOptions(
               height: 200,
               aspectRatio: 16 / 9,
@@ -71,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+
                     height: 100,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -86,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     "27 Apr - 13:00 ",
                     style: TextStyle(color: Colors.amber),
+
                   ),
                   Flexible(
                     child: Text(
@@ -143,19 +149,26 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17)),
-                          Container(
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(EventPage());
+                            },
+                            child: Container(
                               height: 35,
                               width: 110,
                               padding: EdgeInsets.symmetric(horizontal: 5),
-                              decoration: BoxDecoration(
+                            decoration: BoxDecoration(
                                   color: Colors.blueGrey[900],
                                   borderRadius: BorderRadius.circular(30)),
+
                               child: Center(
                                   child: Text(
-                                "More Detail Click",
+                                "Keşfet",
                                 style: TextStyle(color: Colors.amber),
-                              ))),
-                        ],
+
+                              )),
+                              ),
+                          )],
                       )),
                   SizedBox(
                     height: 10,
