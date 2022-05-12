@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/Themes.dart';
-
-import 'ListEvent.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -98,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text("İstanbul/Beykoz"),
+                  Text("İstanbul/Şişli"),
                   Expanded(
                     child: ListView.builder(
                         itemCount: 4,
@@ -127,36 +126,39 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      height: 50,
+                      height: 100,
                       width: Get.width,
-                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(5),
+                            topLeft: Radius.circular(5)),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Yakındakiler",
-                              style: TextStyle(color: Colors.black)),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17)),
                           Container(
                               height: 35,
-                              width: 70,
+                              width: 110,
+                              padding: EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
-                                  color: Colors.amber,
+                                  color: Colors.blueGrey[900],
                                   borderRadius: BorderRadius.circular(30)),
-                              child: TextButton(
-                                style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.black),
-                                ),
-                                onPressed: () {
-                                  Get.to(EventPage());
-                                },
-                                child: Text('Keşfet'),
-                              )),
+                              child: Center(
+                                  child: Text(
+                                "More Detail Click",
+                                style: TextStyle(color: Colors.amber),
+                              ))),
                         ],
                       )),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
@@ -164,53 +166,67 @@ class _HomePageState extends State<HomePage> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Container(
-
-                          height: 200,
+                          height: 125,
                           width: Get.width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Colors.red,
-                                width: 5,
-                              )
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(5),
+                                topLeft: Radius.circular(5)),
                           ),
-                          child: Column(
-
+                          margin: EdgeInsets.only(bottom: 5),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-
-                                height: 100,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(5)),
-
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/images/kayıtOl.jpg"),
-                                      fit: BoxFit.fitWidth,
-
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "27 Apr - 13:00 ",
+                                      style: TextStyle(
+                                          color: Colors.amber,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text("İstanbul/Şişli"),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 5,
                                   ),
-
-                                ),
+                                  Container(
+                                    height: 80,
+                                    width: 125,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/kayıtOl.jpg"),
+                                          fit: BoxFit.fitWidth),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-
-                                "27 Apr - 13:00 ",
-                                style: TextStyle(color: Colors.amber),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "Maltepe Sahil Etkinlik",
-                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("İstanbul/Beykoz"),
                             ],
                           ),
                         );

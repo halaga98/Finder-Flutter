@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class Themes {
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: Colors.blueGrey[300],
+    textSelectionColor: Colors.white,
     scaffoldBackgroundColor: Color(0xFFF0F7F7),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.amber,
@@ -26,6 +27,7 @@ class Themes {
   );
   final darkTheme = ThemeData.dark().copyWith(
     primaryColor: Colors.blueGrey[800],
+    textSelectionColor: Colors.black,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.amber,
       centerTitle: true,

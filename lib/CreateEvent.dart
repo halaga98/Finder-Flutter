@@ -1,22 +1,245 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class CEventPage extends StatefulWidget {
-  const CEventPage({Key? key}) : super(key: key);
+class CreateEvent extends StatefulWidget {
+  const CreateEvent({Key? key}) : super(key: key);
 
   @override
-  State<CEventPage> createState() => _CEventPageState();
+  _CreateEventState createState() => _CreateEventState();
 }
-class _CEventPageState extends State<CEventPage> {
+
+class _CreateEventState extends State<CreateEvent> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-        title: Text(
-        "Finder",
-        style: TextStyle(fontSize: 30),
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _header(context),
+                SizedBox(
+                  height: 20,
+                ),
+                _inputField(context),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  _header(context) {
+    return Column(
+      children: [
+        Container(
+          height: 250,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            image: DecorationImage(
+                image: AssetImage("assets/images/createEvent.png"),
+                fit: BoxFit.fitHeight),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          "Create an Event",
+          style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  _inputField(context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextField(
+          decoration: InputDecoration(
+            hintText: "Etkinlik Başlığı",
+            labelText: "Etkinlik Başlığı",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide.none),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+            filled: true,
+            prefixIcon: Icon(Icons.title),
+          ),
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                width: Get.width / 2,
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: "Koşu",
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: TextStyle(color: Get.theme.hintColor),
+                    onChanged: (String? newValue) {
+                      setState(() {});
+                    },
+                    items: <String>['Koşu', 'Two', 'Free', 'Four']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Container(
+                width: Get.width / 2,
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: "Online",
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: TextStyle(color: Get.theme.hintColor),
+                    onChanged: (String? newValue) {
+                      setState(() {});
+                    },
+                    items: <String>['Online', 'Two', 'Free', 'Four']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 50,
+                width: Get.width / 2,
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: GestureDetector(
+                            child: Text(
+                                DateFormat(
+                                  'EEE, MMM dd yyyy',
+                                ).format(DateTime.now()),
+                                textAlign: TextAlign.left),
+                            onTap: () async {
+                              final DateTime? date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime(2100),
+                              );
+
+                              if (date != null) {
+                                setState(() {
+                                  DateTime(date.year, date.month, date.day, 12,
+                                      30, 0);
+                                  TimeOfDay(hour: 12, minute: 30);
+                                });
+                              }
+                            }),
+                      ),
+                      GestureDetector(
+                          child: Text(
+                            DateFormat.Hm().format(DateTime.now()),
+                            textAlign: TextAlign.right,
+                          ),
+                          onTap: () async {
+                            final TimeOfDay? time = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(hour: 12, minute: 30));
+
+                            if (time != null) {
+                              setState(() {});
+                            }
+                          }),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Container(
+                height: 50,
+                width: Get.width / 2,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Max. Katılımcı",
+                    labelText: "Max. Katılımcı",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide.none),
+                    fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                    filled: true,
+                    prefixIcon: Icon(Icons.title),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 10),
+        TextField(
+          decoration: InputDecoration(
+            labelText: "Etkinlik Adresi",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide.none),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+            filled: true,
+            prefixIcon: Icon(Icons.map),
+          ),
+          minLines: 3,
+          maxLines: 3,
+        ),
+        SizedBox(height: 10),
+        TextField(
+          decoration: InputDecoration(
+            labelText: "Açıklama",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide.none),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+            filled: true,
+            prefixIcon: Icon(Icons.event_note),
+          ),
+          minLines: 5,
+          maxLines: 5,
+        ),
+        SizedBox(height: 10),
+        Row(
+          children: [Icon(Icons.attach_file), Icon(Icons.photo_camera)],
+        ),
+      ],
     );
   }
 }

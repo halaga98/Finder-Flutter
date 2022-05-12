@@ -100,7 +100,11 @@ class LoginPage extends StatelessWidget {
   }
 
   _forgotPassword(context) {
-    return TextButton(onPressed: () {Get.to(PasswordPage());}, child: Text("Şifrenizi Unuttunuz mu?"));
+    return TextButton(
+        onPressed: () {
+          Get.to(PasswordPage());
+        },
+        child: Text("Şifrenizi Unuttunuz mu?"));
   }
 
   _signup(context) {
