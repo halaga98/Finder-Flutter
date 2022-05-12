@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/DetailEvent.dart';
 import 'package:project/ListEvent.dart';
 import 'package:project/Themes.dart';
 
@@ -30,11 +31,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         shrinkWrap: true,
-
         children: [
           Container(
             height: 250,
-
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -48,7 +47,6 @@ class _HomePageState extends State<HomePage> {
           ),
           CarouselSlider.builder(
             itemCount: 15,
-
             options: CarouselOptions(
               height: 200,
               aspectRatio: 16 / 9,
@@ -75,7 +73,6 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-
                     height: 100,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -91,7 +88,6 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     "27 Apr - 13:00 ",
                     style: TextStyle(color: Colors.amber),
-
                   ),
                   Flexible(
                     child: Text(
@@ -157,18 +153,17 @@ class _HomePageState extends State<HomePage> {
                               height: 35,
                               width: 110,
                               padding: EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
+                              decoration: BoxDecoration(
                                   color: Colors.blueGrey[900],
                                   borderRadius: BorderRadius.circular(30)),
-
                               child: Center(
                                   child: Text(
                                 "Keşfet",
                                 style: TextStyle(color: Colors.amber),
-
                               )),
-                              ),
-                          )],
+                            ),
+                          )
+                        ],
                       )),
                   SizedBox(
                     height: 10,
@@ -178,69 +173,75 @@ class _HomePageState extends State<HomePage> {
                       itemCount: 6,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return Container(
-                          height: 125,
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(5),
-                                topLeft: Radius.circular(5)),
-                          ),
-                          margin: EdgeInsets.only(bottom: 5),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => DetailEvent());
+                          },
+                          child: Container(
+                            height: 125,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(5),
+                                  topLeft: Radius.circular(5)),
+                            ),
+                            margin: EdgeInsets.only(bottom: 5),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "27 Apr - 13:00 ",
+                                        style: TextStyle(
+                                            color: Colors.amber,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("İstanbul/Şişli"),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
                                   children: [
-                                    Text(
-                                      "27 Apr - 13:00 ",
-                                      style: TextStyle(
-                                          color: Colors.amber,
-                                          fontWeight: FontWeight.w500),
-                                    ),
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
-                                        overflow: TextOverflow.clip,
+                                    Container(
+                                      height: 80,
+                                      width: 125,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/kayıtOl.jpg"),
+                                            fit: BoxFit.fitWidth),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("İstanbul/Şişli"),
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 80,
-                                    width: 125,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/images/kayıtOl.jpg"),
-                                          fit: BoxFit.fitWidth),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       }),

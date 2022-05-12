@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/Themes.dart';
 
-
-class DetailPage extends StatefulWidget {
-  const DetailPage ({Key? key}) : super(key: key);
+class DetailEvent extends StatefulWidget {
+  const DetailEvent({Key? key}) : super(key: key);
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailEvent> createState() => _DetailEventState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailEventState extends State<DetailEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,6 @@ class _DetailPageState extends State<DetailPage> {
           style: TextStyle(fontSize: 30),
         ),
       ),
-
     );
   }
 }

@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CreateEvent extends StatefulWidget {
   const CreateEvent({Key? key}) : super(key: key);
@@ -10,6 +15,7 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  String base64Image = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +43,7 @@ class _CreateEventState extends State<CreateEvent> {
     return Column(
       children: [
         Container(
-          height: 250,
+          height: 200,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -237,9 +243,115 @@ class _CreateEventState extends State<CreateEvent> {
         ),
         SizedBox(height: 10),
         Row(
-          children: [Icon(Icons.attach_file), Icon(Icons.photo_camera)],
+          children: [
+            GestureDetector(
+              onTap: () async {
+                await Permission.mediaLibrary.request();
+                openFile();
+              },
+              child: Icon(
+                Icons.attach_file,
+                color: Get.theme.buttonColor,
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Permission.camera.request();
+                _imgFromCamera();
+              },
+              child: Icon(
+                Icons.photo_camera,
+                color: Get.theme.buttonColor,
+              ),
+            )
+          ],
         ),
+        SizedBox(
+          height: 5,
+        ),
+        base64Image == ""
+            ? Container()
+            : Container(
+                width: 100,
+                height: 150,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 150,
+                      margin: EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: MemoryImage(base64Decode(base64Image)))),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            base64Image = "";
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Get.theme.primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.clear,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+        SizedBox(
+          height: 25,
+        )
       ],
     );
+  }
+
+  void _imgFromCamera() async {
+    final ImagePicker _picker = ImagePicker();
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    XFile profileImage = pickedFile!;
+
+    if (profileImage != null) {
+      List<int> fileBytes = [];
+      fileBytes = new File(profileImage.path).readAsBytesSync().toList();
+      //todo: crop eklenecek
+      String fileContent = base64.encode(fileBytes);
+      base64Image = fileContent;
+      setState(() {});
+    }
+  }
+
+  Future<void> openFile() async {
+    try {
+      final ImagePicker _picker = ImagePicker();
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      XFile profileImage = pickedFile!;
+
+      if (profileImage != null) {
+        List<int> fileBytes = [];
+        fileBytes = new File(profileImage.path).readAsBytesSync().toList();
+        //todo: crop eklenecek
+        String fileContent = base64.encode(fileBytes);
+        base64Image = fileContent;
+        setState(() {});
+      }
+
+      print('aaa');
+    } catch (e) {}
   }
 }
