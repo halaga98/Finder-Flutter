@@ -17,12 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.changeTheme(
-              Get.isDarkMode ? Themes().lightTheme : Themes().darkTheme);
-        },
-      ),
+
       appBar: AppBar(
         title: Text(
           "Finder",

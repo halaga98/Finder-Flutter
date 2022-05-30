@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/PasswordPage.dart';
+import 'package:project/Profile.dart';
 import 'package:project/RegisterPage.dart';
 
 class LoginPage extends StatelessWidget {
@@ -89,7 +90,7 @@ class LoginPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () { Get.to(EditProfile());},
           child: Text(
             "Giriş Yap",
             style: TextStyle(),
