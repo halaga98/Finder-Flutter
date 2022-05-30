@@ -56,7 +56,7 @@ class _CreateEventState extends State<CreateEvent> {
           height: 20,
         ),
         Text(
-          "Create an Event",
+          "Etkinlik Oluştur",
           style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
         ),
       ],
@@ -89,14 +89,14 @@ class _CreateEventState extends State<CreateEvent> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: "Koşu",
+                    value: "Kültür ve Sanat",
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: TextStyle(color: Get.theme.hintColor),
                     onChanged: (String? newValue) {
                       setState(() {});
                     },
-                    items: <String>['Koşu', 'Two', 'Free', 'Four']
+                    items: <String>['Kültür ve Sanat', 'İş ve Kariyer ', 'Free', 'Four']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -124,7 +124,7 @@ class _CreateEventState extends State<CreateEvent> {
                     onChanged: (String? newValue) {
                       setState(() {});
                     },
-                    items: <String>['Online', 'Two', 'Free', 'Four']
+                    items: <String>['Online', 'Yüzyüze']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -265,6 +265,27 @@ class _CreateEventState extends State<CreateEvent> {
               child: Icon(
                 Icons.photo_camera,
                 color: Get.theme.buttonColor,
+              ),
+            ),
+            SizedBox(
+              width: 160,
+            ),
+            GestureDetector(
+              onTap: () {
+
+              },
+              child: Container(
+                height: 35,
+                width: 90,
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Center(
+                    child: Text(
+                      "Kaydet",
+                      style: TextStyle(color: Colors.white),
+                    )),
               ),
             )
           ],

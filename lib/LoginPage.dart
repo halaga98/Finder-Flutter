@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        Text("Katıl ve Toplulukları Keşfet"),
+        Text("Giriş Yap ve Etkinlikleri Keşfet"),
       ],
     );
   }

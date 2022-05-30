@@ -60,7 +60,7 @@ class RegisterPage extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        Text("Katıl ve Toplulukları Keşfet"),
+        Text("Kayıt ol ve Etkinlikleri Keşfet"),
       ],
     );
   }
