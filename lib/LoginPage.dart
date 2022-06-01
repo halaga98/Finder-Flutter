@@ -4,6 +4,8 @@ import 'package:project/PasswordPage.dart';
 import 'package:project/Profile.dart';
 import 'package:project/RegisterPage.dart';
 
+import 'DetailProfile.dart';
+
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class LoginPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () { Get.to(EditProfile());},
+          onPressed: () { Get.to(DetailProfile());},
           child: Text(
             "Giriş Yap",
             style: TextStyle(),

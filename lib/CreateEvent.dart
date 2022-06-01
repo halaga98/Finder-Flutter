@@ -12,6 +12,7 @@ class CreateEvent extends StatefulWidget {
 
   @override
   _CreateEventState createState() => _CreateEventState();
+  get base64Image => null;
 }
 
 class _CreateEventState extends State<CreateEvent> {
