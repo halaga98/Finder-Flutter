@@ -13,6 +13,7 @@ class DetailProfile extends StatefulWidget {
 
   @override
   State<DetailProfile> createState() => _DetailProfileState();
+
   get base64Image => null;
 }
 
@@ -35,9 +36,10 @@ class _DetailProfileState extends State<DetailProfile> {
             Container(
               constraints: BoxConstraints.expand(height: 60),
               child: TabBar(
+                labelPadding: EdgeInsets.symmetric(horizontal: 23),
                 tabs: [
                   Tab(text: "Geçmiş Etkinlikler"),
-                  Tab(text: "Benim Etkinliklerim"),
+                  Tab(text: "Etkinliklerim"),
                   Tab(text: "Profilim"),
                 ],
                 isScrollable: true,
@@ -59,7 +61,6 @@ class _DetailProfileState extends State<DetailProfile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-
                           Row(
                             children: [
                               GestureDetector(
@@ -67,19 +68,31 @@ class _DetailProfileState extends State<DetailProfile> {
                                   await Permission.mediaLibrary.request();
                                   openFile();
                                 },
-                                child: Icon(
-                                  Icons.attach_file,
-                                  color: Get.theme.buttonColor,
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.photo_camera,
+                                    color: Get.theme.buttonColor,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle, color: Colors.amber),
+
+
+                                ),
+
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Container(
+                                child: Text(
+                                  "Sümeyye Korkmaz",
+                                  style: TextStyle(fontSize: 20),
                                 ),
                               ),
-
                             ],
-                          ),
-                          Divider(
-                            thickness: 1,
-                          ),
-                          SizedBox(
-                            height: 15,
                           ),
                           base64Image == ""
                               ? Container()
@@ -124,6 +137,12 @@ class _DetailProfileState extends State<DetailProfile> {
                                     ],
                                   ),
                                 ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
                           SizedBox(
                             height: 10,
                           ),
