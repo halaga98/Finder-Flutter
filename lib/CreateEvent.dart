@@ -75,7 +75,6 @@ class _CreateEventState extends State<CreateEvent> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.title),
           ),
@@ -86,7 +85,10 @@ class _CreateEventState extends State<CreateEvent> {
             Expanded(
               child: Container(
                 width: Get.width / 2,
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).inputDecorationTheme.fillColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -97,8 +99,12 @@ class _CreateEventState extends State<CreateEvent> {
                     onChanged: (String? newValue) {
                       setState(() {});
                     },
-                    items: <String>['Kültür ve Sanat', 'İş ve Kariyer ', 'Free', 'Four']
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items: <String>[
+                      'Kültür ve Sanat',
+                      'İş ve Kariyer ',
+                      'Free',
+                      'Four'
+                    ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -114,7 +120,10 @@ class _CreateEventState extends State<CreateEvent> {
             Expanded(
               child: Container(
                 width: Get.width / 2,
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).inputDecorationTheme.fillColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -145,7 +154,10 @@ class _CreateEventState extends State<CreateEvent> {
               child: Container(
                 height: 50,
                 width: Get.width / 2,
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).inputDecorationTheme.fillColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,7 +217,6 @@ class _CreateEventState extends State<CreateEvent> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                         borderSide: BorderSide.none),
-                    fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
                     filled: true,
                     prefixIcon: Icon(Icons.title),
                   ),
@@ -221,7 +232,6 @@ class _CreateEventState extends State<CreateEvent> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.map),
           ),
@@ -235,7 +245,6 @@ class _CreateEventState extends State<CreateEvent> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.event_note),
           ),
@@ -272,9 +281,7 @@ class _CreateEventState extends State<CreateEvent> {
               width: 160,
             ),
             GestureDetector(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: Container(
                 height: 35,
                 width: 90,
@@ -284,9 +291,9 @@ class _CreateEventState extends State<CreateEvent> {
                     borderRadius: BorderRadius.circular(5)),
                 child: Center(
                     child: Text(
-                      "Kaydet",
-                      style: TextStyle(color: Colors.white),
-                    )),
+                  "Kaydet",
+                  style: TextStyle(color: Colors.white),
+                )),
               ),
             )
           ],

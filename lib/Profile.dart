@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:get/get.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
@@ -41,12 +42,13 @@ class _EditProfileState extends State<EditProfile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-
         SizedBox(
           height: 10,
         ),
-        Text("Hesabın",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+        Text(
+          "Hesabın",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
         SizedBox(
           height: 10,
         ),
@@ -63,10 +65,7 @@ class _EditProfileState extends State<EditProfile> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme
-                .of(context)
-                .primaryColor
-                .withOpacity(0.1),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.email),
           ),
@@ -77,14 +76,10 @@ class _EditProfileState extends State<EditProfile> {
         IntlPhoneField(
           decoration: InputDecoration(
             hintText: "Telefon ",
-
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme
-                .of(context)
-                .primaryColor
-                .withOpacity(0.1),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.email),
           ),
@@ -103,10 +98,7 @@ class _EditProfileState extends State<EditProfile> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme
-                .of(context)
-                .primaryColor
-                .withOpacity(0.1),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.arrow_forward_sharp),
           ),
@@ -114,8 +106,10 @@ class _EditProfileState extends State<EditProfile> {
         SizedBox(
           height: 20,
         ),
-        Text("Bilgilerin",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+        Text(
+          "Bilgilerin",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
         Divider(
           thickness: 1,
         ),
@@ -129,10 +123,7 @@ class _EditProfileState extends State<EditProfile> {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme
-                .of(context)
-                .primaryColor
-                .withOpacity(0.1),
+            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.account_circle),
           ),
@@ -141,9 +132,8 @@ class _EditProfileState extends State<EditProfile> {
           height: 20,
         ),
         TextField(
-
           decoration: InputDecoration(
-            labelText: "Hakkında" ,
+            labelText: "Hakkında",
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
@@ -184,46 +174,39 @@ class _EditProfileState extends State<EditProfile> {
           height: 20,
         ),
         GestureDetector(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: Container(
             height: 35,
             width: 90,
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(5)),
+                color: Colors.amber, borderRadius: BorderRadius.circular(5)),
             child: Center(
                 child: Text(
-                  "Kaydet",
-                  style: TextStyle(color: Colors.white),
-                )),
+              "Kaydet",
+              style: TextStyle(color: Colors.white),
+            )),
           ),
         ),
         SizedBox(
           height: 20,
         ),
         GestureDetector(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: Container(
             height: 35,
             width: 90,
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(5)),
+                color: Colors.red, borderRadius: BorderRadius.circular(5)),
             child: Center(
                 child: Text(
-                  "Oturumu Kapat",
-                  style: TextStyle(color: Colors.white),
-                )),
+              "Oturumu Kapat",
+              style: TextStyle(color: Colors.white),
+            )),
           ),
         )
       ],
     );
-
   }
 }

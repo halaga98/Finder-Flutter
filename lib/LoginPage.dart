@@ -17,7 +17,6 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 _header(context),
                 SizedBox(
                   height: 30,
@@ -36,7 +35,6 @@ class LoginPage extends StatelessWidget {
   _header(context) {
     return Column(
       children: [
-
         Container(
           height: 250,
           width: MediaQuery.of(context).size.width,
@@ -72,7 +70,6 @@ class LoginPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.mail),
           ),
@@ -84,7 +81,6 @@ class LoginPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.password),
           ),
@@ -92,7 +88,9 @@ class LoginPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () { Get.to(DetailProfile());},
+          onPressed: () {
+            Get.to(DetailProfile());
+          },
           child: Text(
             "Giriş Yap",
             style: TextStyle(),

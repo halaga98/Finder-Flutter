@@ -8,7 +8,6 @@ class PasswordPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-
           child: Container(
             margin: EdgeInsets.all(24),
             child: Column(
@@ -19,7 +18,6 @@ class PasswordPage extends StatelessWidget {
                   height: 30,
                 ),
                 _inputField(context),
-
               ],
             ),
           ),
@@ -63,7 +61,6 @@ class PasswordPage extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-
       ],
     );
   }
@@ -78,7 +75,6 @@ class PasswordPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.mail),
           ),

@@ -75,7 +75,6 @@ class RegisterPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.person),
           ),
@@ -87,7 +86,6 @@ class RegisterPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.mail),
           ),
@@ -99,7 +97,6 @@ class RegisterPage extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide.none),
-            fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
             filled: true,
             prefixIcon: Icon(Icons.password_sharp),
           ),
