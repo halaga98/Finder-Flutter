@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/RegisterPage.dart';
+import 'package:project/Controller/ControllerDB.dart';
+import 'package:project/Pages/Login/RegisterPage.dart';
 
 class PasswordPage extends StatelessWidget {
+  ControllerDB _controllerDB = Get.put(ControllerDB());
+  TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _header(context),
-                SizedBox(
-                  height: 30,
-                ),
-                _inputField(context),
-              ],
-            ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 45,
+              ),
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        _controllerDB.updateLoginState(Login.SignIn);
+                      },
+                      child: Icon(Icons.arrow_back))
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              _header(context),
+              SizedBox(
+                height: 30,
+              ),
+              _inputField(context),
+            ],
           ),
         ),
       ),
@@ -29,15 +46,6 @@ class PasswordPage extends StatelessWidget {
   _header(context) {
     return Column(
       children: [
-        Row(
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Icon(Icons.arrow_back))
-          ],
-        ),
         SizedBox(
           height: 10,
         ),
@@ -70,6 +78,7 @@ class PasswordPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          controller: _textEditingController,
           decoration: InputDecoration(
             hintText: "E-posta adresin",
             border: OutlineInputBorder(
@@ -81,7 +90,18 @@ class PasswordPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            await _controllerDB
+                .resetPassword(
+              userName: _textEditingController.text,
+            )
+                .then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(value.replaceAll(" \" ", " ")),
+              ));
+            });
+            _controllerDB.updateLoginState(Login.SignIn);
+          },
           child: Text(
             "Parolayı Sıfırla",
             style: TextStyle(),

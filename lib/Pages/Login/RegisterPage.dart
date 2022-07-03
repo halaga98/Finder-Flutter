@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/Bottom.dart';
-import 'package:project/LoginPage.dart';
+import 'package:project/BottomBar/Bottom.dart';
+import 'package:project/Controller/ControllerDB.dart';
+import 'package:project/Pages/Login/LoginPage.dart';
 
 class RegisterPage extends StatelessWidget {
+  ControllerDB _controllerDB = Get.put(ControllerDB());
+  TextEditingController _controllername = TextEditingController();
+  TextEditingController _controllersurename = TextEditingController();
+  TextEditingController _controllermail = TextEditingController();
+  TextEditingController _controllerpass = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            margin: EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 35,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
               children: [
-                _header(context),
-                SizedBox(height: 30),
-                _inputField(context),
-                _forgotPassword(context),
-                _signup(context),
+                GestureDetector(
+                    onTap: () {
+                      _controllerDB.updateLoginState(Login.SignIn);
+                    },
+                    child: Icon(Icons.arrow_back))
               ],
             ),
           ),
-        ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _header(context),
+                    SizedBox(height: 20),
+                    _inputField(context),
+                    _forgotPassword(context),
+                    _signup(context),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -30,20 +55,8 @@ class RegisterPage extends StatelessWidget {
   _header(context) {
     return Column(
       children: [
-        Row(
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Icon(Icons.arrow_back))
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
         Container(
-          height: 250,
+          height: 200,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -52,7 +65,6 @@ class RegisterPage extends StatelessWidget {
                 fit: BoxFit.fitHeight),
           ),
         ),
-        SizedBox(height: 30),
         Text(
           "Hoşgeldin",
           style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
@@ -70,6 +82,7 @@ class RegisterPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          controller: _controllername,
           decoration: InputDecoration(
             hintText: "İsminiz",
             border: OutlineInputBorder(
@@ -81,6 +94,19 @@ class RegisterPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         TextField(
+          controller: _controllersurename,
+          decoration: InputDecoration(
+            hintText: "Soyisminiz",
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide.none),
+            filled: true,
+            prefixIcon: Icon(Icons.person),
+          ),
+        ),
+        SizedBox(height: 10),
+        TextField(
+          controller: _controllermail,
           decoration: InputDecoration(
             hintText: "E-Posta Adresiniz",
             border: OutlineInputBorder(
@@ -92,6 +118,7 @@ class RegisterPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         TextField(
+          controller: _controllerpass,
           decoration: InputDecoration(
             hintText: "Parola",
             border: OutlineInputBorder(
@@ -104,7 +131,22 @@ class RegisterPage extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            await _controllerDB
+                .register(
+                    email: _controllermail.text,
+                    password: _controllerpass.text,
+                    firstName: _controllername.text.capitalizeFirst!,
+                    lastName: _controllersurename.text.capitalizeFirst!)
+                .then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(value.replaceAll(" \" ", "")),
+              ));
+              if (value == "\"Kullanıcı başarıyla eklendi.\"") {
+                _controllerDB.updateLoginState(Login.SignIn);
+              }
+            });
+          },
           child: Text(
             "Kayıt Ol",
             style: TextStyle(fontSize: 20),
@@ -136,7 +178,7 @@ class RegisterPage extends StatelessWidget {
         Text("Hesabınız var mı?"),
         TextButton(
             onPressed: () {
-              Get.back();
+              _controllerDB.updateLoginState(Login.SignIn);
             },
             child: Text("Giriş Yap"))
       ],

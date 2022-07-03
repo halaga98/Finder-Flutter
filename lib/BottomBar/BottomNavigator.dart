@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project/CreateEvent.dart';
-import 'package:project/HomaPage.dart';
-import 'package:project/LoginPage.dart';
-import 'package:project/RegisterPage.dart';
+import 'package:project/Model/Event/OneEvent.dart';
+import 'package:project/Pages/Event/CreateEvent.dart';
+import 'package:project/Pages/Profile/DetailProfile.dart';
+import 'package:project/Pages/HomePage/HomaPage.dart';
+import 'package:project/Pages/Login/LoginPage.dart';
+import 'package:project/Pages/Profile/Profile.dart';
 
 class TabNavigatorRoutes {
   static const String root = '/';
@@ -27,8 +29,10 @@ class _TabNavigatorState extends State<TabNavigator> {
     if (widget.tabItem == "Page1")
       child = HomePage();
     else if (widget.tabItem == "Page2")
-      child = CreateEvent();
-    else if (widget.tabItem == "Page3") child = LoginPage();
+      child = CreateEvent(
+        oneEvent: OneEvent(),
+      );
+    else if (widget.tabItem == "Page3") child = DetailProfile();
     return Navigator(
       key: widget.navigatorKey,
       onGenerateRoute: (routeSettings) {

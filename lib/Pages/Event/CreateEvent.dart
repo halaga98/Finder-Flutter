@@ -1,14 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:project/Controller/ControllerBottom.dart';
+import 'package:project/Controller/ControllerDB.dart';
+import 'package:project/Controller/ControllerEvent.dart';
+import 'package:project/Controller/ControllerUser.dart';
+import 'package:project/Model/Event/OneEvent.dart';
 
 class CreateEvent extends StatefulWidget {
-  const CreateEvent({Key? key}) : super(key: key);
+  final OneEvent oneEvent;
+  const CreateEvent({Key? key, required this.oneEvent}) : super(key: key);
 
   @override
   _CreateEventState createState() => _CreateEventState();
@@ -16,23 +24,111 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  ControllerEvent _controllerEvent = Get.put(ControllerEvent());
+  ControllerDB _controllerDB = Get.put(ControllerDB());
+  ControllerUser _controllerUser = Get.put(ControllerUser());
+  ControllerBottom _controllerBottom = Get.put(ControllerBottom());
+
+  TextEditingController _controllerTitle = TextEditingController();
+  TextEditingController _controllerCount = TextEditingController();
+  TextEditingController _controllerAddress = TextEditingController();
+  TextEditingController _controllerDescrip = TextEditingController();
+  DateTime eventDate = DateTime.now();
+  int type = 0;
+  List<String> data = ['Online', 'Yüzyüze'];
+
   String base64Image = "";
+  var m;
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      if (!widget.oneEvent.id.isNullOrBlank!) {
+        _controllerTitle = TextEditingController(text: widget.oneEvent.title);
+        _controllerCount = TextEditingController(
+            text: widget.oneEvent.maxUserCount.toString());
+        _controllerAddress =
+            TextEditingController(text: widget.oneEvent.address);
+        _controllerDescrip =
+            TextEditingController(text: widget.oneEvent.description);
+        eventDate = DateTime.parse(widget.oneEvent.eventDate!);
+        type = widget.oneEvent.type!;
+        setState(() {});
+      } else {
+        print("biz burda değiliz");
+      }
+      ByteData bytes = await rootBundle
+          .load("assets/images/juliane-liebermann-Pw7i-YVg5uM-unsplash.jpg");
+      var buffer = bytes.buffer;
+      m = base64.encode(Uint8List.view(buffer));
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _header(context),
-                SizedBox(
-                  height: 20,
-                ),
-                _inputField(context),
-              ],
+        floatingActionButton: FloatingActionButton(
+          heroTag: "createevent",
+          backgroundColor: Colors.amber,
+          onPressed: () async {
+            await _controllerEvent.SaveNewEvent(_controllerDB.headers(),
+                    id: widget.oneEvent.id.isNullOrBlank!
+                        ? 0
+                        : widget.oneEvent.id,
+                    title: _controllerTitle.text,
+                    type: type,
+                    eventDate: eventDate,
+                    maxUserCount: int.parse(_controllerCount.text),
+                    address: _controllerAddress.text,
+                    description: _controllerDescrip.text,
+                    eventImage: base64Image.isBlank! ? m : base64Image)
+                .then((value) async {
+              await _controllerUser.GetJoinedEvent(_controllerDB.headers());
+              await _controllerUser.GetCreatedEvents(_controllerDB.headers());
+              await _controllerEvent.GetAllEvent(_controllerDB.headers());
+              if (!widget.oneEvent.id.isNullOrBlank!) {
+                _controllerBottom.refreshdetail = true;
+                _controllerBottom.update();
+                Get.back();
+              } else {
+                _controllerBottom.goHomePage = true;
+                _controllerBottom.update();
+              }
+
+              setState(() {
+                _controllerTitle.clear();
+                type = 0;
+                eventDate = DateTime.now();
+                _controllerCount.clear();
+                _controllerAddress.clear();
+                _controllerDescrip.clear();
+                base64Image = "";
+              });
+
+              print(value);
+            });
+          },
+          child: Icon(Icons.save),
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _header(context),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _inputField(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -44,7 +140,7 @@ class _CreateEventState extends State<CreateEvent> {
     return Column(
       children: [
         Container(
-          height: 200,
+          height: 180,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -54,7 +150,7 @@ class _CreateEventState extends State<CreateEvent> {
           ),
         ),
         SizedBox(
-          height: 20,
+          height: 10,
         ),
         Text(
           "Etkinlik Oluştur",
@@ -69,6 +165,7 @@ class _CreateEventState extends State<CreateEvent> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          controller: _controllerTitle,
           decoration: InputDecoration(
             hintText: "Etkinlik Başlığı",
             labelText: "Etkinlik Başlığı",
@@ -92,50 +189,21 @@ class _CreateEventState extends State<CreateEvent> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: "Kültür ve Sanat",
+                    focusColor:
+                        Theme.of(context).inputDecorationTheme.fillColor,
+                    value: data[type],
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
                     style: TextStyle(color: Get.theme.hintColor),
                     onChanged: (String? newValue) {
-                      setState(() {});
+                      setState(() {
+                        setState(() {
+                          type =
+                              data.indexWhere((element) => element == newValue);
+                        });
+                      });
                     },
-                    items: <String>[
-                      'Kültür ve Sanat',
-                      'İş ve Kariyer ',
-                      'Free',
-                      'Four'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Container(
-                width: Get.width / 2,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).inputDecorationTheme.fillColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: "Online",
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: TextStyle(color: Get.theme.hintColor),
-                    onChanged: (String? newValue) {
-                      setState(() {});
-                    },
-                    items: <String>['Online', 'Yüzyüze']
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items: data.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -167,37 +235,42 @@ class _CreateEventState extends State<CreateEvent> {
                             child: Text(
                                 DateFormat(
                                   'EEE, MMM dd yyyy',
-                                ).format(DateTime.now()),
+                                ).format(eventDate),
                                 textAlign: TextAlign.left),
                             onTap: () async {
                               final DateTime? date = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: eventDate,
                                 firstDate: DateTime(1900),
                                 lastDate: DateTime(2100),
                               );
 
                               if (date != null) {
                                 setState(() {
-                                  DateTime(date.year, date.month, date.day, 12,
-                                      30, 0);
-                                  TimeOfDay(hour: 12, minute: 30);
+                                  eventDate = date;
                                 });
                               }
                             }),
                       ),
                       GestureDetector(
                           child: Text(
-                            DateFormat.Hm().format(DateTime.now()),
+                            DateFormat.Hm().format(eventDate),
                             textAlign: TextAlign.right,
                           ),
                           onTap: () async {
                             final TimeOfDay? time = await showTimePicker(
                                 context: context,
-                                initialTime: TimeOfDay(hour: 12, minute: 30));
+                                initialTime: TimeOfDay(
+                                    hour: eventDate.hour,
+                                    minute: eventDate.minute));
+                            print(time);
 
                             if (time != null) {
-                              setState(() {});
+                              setState(() {
+                                eventDate = eventDate.add(Duration(
+                                    hours: time.hour, minutes: time.minute));
+                                print(eventDate);
+                              });
                             }
                           }),
                     ]),
@@ -211,6 +284,8 @@ class _CreateEventState extends State<CreateEvent> {
                 height: 50,
                 width: Get.width / 2,
                 child: TextField(
+                  controller: _controllerCount,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: "Max. Katılımcı",
                     labelText: "Max. Katılımcı",
@@ -227,6 +302,7 @@ class _CreateEventState extends State<CreateEvent> {
         ),
         SizedBox(height: 10),
         TextField(
+          controller: _controllerAddress,
           decoration: InputDecoration(
             labelText: "Etkinlik Adresi",
             border: OutlineInputBorder(
@@ -240,6 +316,7 @@ class _CreateEventState extends State<CreateEvent> {
         ),
         SizedBox(height: 10),
         TextField(
+          controller: _controllerDescrip,
           decoration: InputDecoration(
             labelText: "Açıklama",
             border: OutlineInputBorder(
@@ -248,8 +325,8 @@ class _CreateEventState extends State<CreateEvent> {
             filled: true,
             prefixIcon: Icon(Icons.event_note),
           ),
-          minLines: 5,
-          maxLines: 5,
+          minLines: 4,
+          maxLines: 4,
         ),
         SizedBox(height: 10),
         Row(
@@ -277,25 +354,6 @@ class _CreateEventState extends State<CreateEvent> {
                 color: Get.theme.buttonColor,
               ),
             ),
-            SizedBox(
-              width: 160,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 35,
-                width: 90,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Center(
-                    child: Text(
-                  "Kaydet",
-                  style: TextStyle(color: Colors.white),
-                )),
-              ),
-            )
           ],
         ),
         SizedBox(
